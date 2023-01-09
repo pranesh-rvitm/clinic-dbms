@@ -96,6 +96,9 @@ app.use('/app', (req, res, next) => {
     }
 });
 
+
+
+
 /*
     Website routes
 */
@@ -106,11 +109,15 @@ var appRoute = require('./routes/app');
 var patients = require('./routes/patients');
 var settings = require('./routes/settings');
 var diseases = require('./routes/diseases');
+var appointment = require('./routes/appointment');
 var rooms = require('./routes/rooms');
+
+
 
 app.use('/', login);
 app.use('/', doctors);
 app.use('/', appRoute);
+app.use('/', appointment);
 app.use('/', users);
 app.use('/', patients);
 app.use('/', settings);

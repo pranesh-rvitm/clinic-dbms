@@ -8,41 +8,47 @@ var dynamicTableClickable = true;
 var size = 0;
 
 $(document).ready(function() {
-    var doctorsAPI = URL + "/app/getdocdetail";
-    $.getJSON(doctorsAPI).done(function(doctors) {
+    var appointmentAPI = URL + "/app/getappointmentdetail";
+    $.getJSON(appointmentAPI).done(function(doctors) {
         size = doctors.length;
         $("#free-rooms-live").html(doctors.length);
 
         for (var i = 0; i < doctors.length; i++) {
             var patient = doctors[i];
             var patientsRowConstructor = [];
-            patientsRowConstructor.push(patient["DoctorID"]);
+            patientsRowConstructor.push(i + 1);
+            patientsRowConstructor.push(patient["appointmentID"]);
             patientsRowConstructor.push(patient["firstName"] + " " + patient["lastName"]);
-            patientsRowConstructor.push(patient["Specialization"]);
-            patientsRowConstructor.push(patient["Qualification"]);
+            patientsRowConstructor.push(patient["Doctor"]);
+            patientsRowConstructor.push(patient["Date"]);
             patientsInHospitalTableConstructor.push(patientsRowConstructor);
         }
         $('#patients-in-hospital').DataTable({
             data: patientsInHospitalTableConstructor,
             columns: [{
-                title: "<span class=\"fa fa-hospital-o fa-fw\" style=\"color: black;\"></span>   " + "  ID",
-                width: "25%"
-            }, {
-                title: "Doctor Name",
-                width: "45%"
-            }, {
-                title: "Department",
-                width: "35%"
-            }, {
-                title: "Qualification",
-                width: "35%"
-            }],
+                    title: "<span class=\"fa fa-hospital-o fa-fw\" style=\"color: black;\"></span>   " + "  Si. No.",
+                    width: "25%"
+                }, {
+                    title: "Appointment ID",
+                    width: "25%"
+                }, {
+                    title: "Name",
+                    width: "45%"
+                }, {
+                    title: "Doctor",
+                    width: "45%"
+                },
+                {
+                    title: "Appointment Date",
+                    width: "35%"
+                }
+            ],
 
             paging: false,
             resposnive: true,
             info: false,
             language: {
-                searchPlaceholder: "Search patient in room...",
+                searchPlaceholder: "Search appointment",
                 sSearch: ""
             },
             aaSorting: [
@@ -77,8 +83,8 @@ var clicks = 0;
 
 $("body").on('dblclick', '#patients-in-hospital > tbody > tr', function() {
     var NHSnumber = $(this).children('td')[0];
-    NHSnumber = NHSnumber.textContent;
-    window.location.href = URL + "/app/doctor/" + NHSnumber;
+
+    window.location.href = URL + "/app/";
 });
 
 /*

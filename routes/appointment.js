@@ -2,30 +2,22 @@ const express = require('express');
 const _ = require('lodash');
 const router = express.Router();
 
-var { scoreOfDisease, Disease } = require('../server/models/diseases.js');
-var { Doctor } = require('../server/models/doctor.js');
-var { appointm } = require('../server/models/appointment.js');
-
-var { Patient } = require('./../server/models/patient.js');
-var { rooms, Room } = require('../server/models/rooms.js');
+var { Appointment } = require('../server/models/appointment.js');
 var isValidDate = require('is-valid-date');
 const { ObjectID } = require('mongodb');
 
 
-router.get('/app/adddoctor', (req, res) => {
-    res.render('adddoctor', { pageTitle: "Add Doctor" });
-});
-
-router.get('/app/getdoctors', (req, res) => {
-    res.render('getdoctors', { pageTitle: "All Doctors" });
+router.get('/app/appointments', (req, res) => {
+    res.render('appointment', { pageTitle: "All Appointments" });
 });
 
 
 
 
-router.get('/app/getdocdetail', (req, res) => {
-    console.log('inside doctors');
-    Doctor.find({}).then((doctors) => {
+
+router.get('/app/getappointmentdetail', (req, res) => {
+    console.log('inside appointments');
+    Appointment.find({}).then((doctors) => {
         res.status(200).send(doctors);
     }).catch((err) => {
         console.log(err);
@@ -81,7 +73,6 @@ router.get('/app/getdoctor/:DoctorID', (req, res) => {
 
 router.post('/app/adddoctor', (req, res) => {
     console.log("entered");
-
     var dateOfBirth = req.body.dateOfBirth;
     // Check for empty fields
     if (_.isEmpty(req.body.firstName) || _.isEmpty(req.body.lastName) || !isValidDate(dateOfBirth)) {
@@ -111,9 +102,10 @@ router.post('/app/adddoctor', (req, res) => {
             Specialization: req.body.specialization,
             lastUpdate: (new Date().getTime())
         });
-
+        console.log(doctor);
 
         doctor.save().then((doctor) => {
+            // doctor.updateScore();
             res.status(200).redirect('/app');
         }).catch((err) => {
             console.log(err);
