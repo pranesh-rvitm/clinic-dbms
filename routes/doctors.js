@@ -24,7 +24,7 @@ router.get('/app/getdoctors', (req, res) => {
 
 
 router.get('/app/getdocdetail', (req, res) => {
-    console.log('inside doctors');
+
     Doctor.find({}).then((doctors) => {
         res.status(200).send(doctors);
     }).catch((err) => {
@@ -91,7 +91,6 @@ router.post('/app/adddoctor', (req, res) => {
 
         res.status(400).redirect('/app/adddoctor');
     } else {
-        console.log("entered inside");
         // set the sex of the new doctor
         var sex = req.body.sex;
         if (sex === "male") {

@@ -103,6 +103,19 @@ router.get('/app/getpatients', (req, res) => {
     });
 });
 
+
+router.get('/app/getpatientlist', (req, res) => {
+    res.render('getpatients', { pageTitle: "All Patients" });
+});
+
+router.get('/app/getpatientdetail', (req, res) => {
+    Patient.find({}).then((doctors) => {
+        res.status(200).send(doctors);
+    }).catch((err) => {
+        console.log(err);
+        res.status(400).send();
+    });
+});
 /*
     GET one patient data -> for his personal page
 */

@@ -242,12 +242,12 @@ img {
 
 @media only screen and (min-width: 1024px) and (max-width: 1680px) {
     .bg-illustration {
-        width: 50%;
+        width: 65%;
         -webkit-animation: none;
         animation: none;
     }
     .login {
-        width: 50%;
+        width: 35%;
     }
 }
 

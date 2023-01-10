@@ -59,15 +59,15 @@ $(document).ready(function() {
                 data: patientsWaitingTableConstructor,
                 columns: [{
                     title: "<span class=\"fa fa-hospital-o fa-fw\" style=\"color: black;\"></span>   " + "  no.",
-                    width: "30%"
+                    width: "40%"
                 }, {
                     title: "Patients waiting",
                     width: "60%"
                 }, {
                     title: "Score",
-                    width: "10%"
+                    width: "20%"
                 }],
-                scrollY: '60vh',
+
                 scrollCollapse: true,
                 paging: false,
                 resposnive: true,
@@ -116,7 +116,7 @@ $(document).ready(function() {
                     title: "Score",
                     width: "15%"
                 }],
-                scrollY: '60vh',
+
                 scrollCollapse: true,
                 paging: false,
                 resposnive: true,
@@ -150,7 +150,7 @@ $(document).ready(function() {
                 columns: [{
                     title: "Free rooms"
                 }],
-                scrollY: '60vh',
+
                 scrollCollapse: true,
                 paging: false,
                 resposnive: true,
@@ -173,7 +173,80 @@ $(document).ready(function() {
 
         });
     });
+
+
+
+
+
+
 });
+
+
+$(document).ready(function() {
+    var doctorsAPI = URL + "/app/getdocdetail";
+    $.getJSON(doctorsAPI).done(function(doctors) {
+        size = doctors.length;
+        $("#free-rooms-live").html(doctors.length);
+
+        for (var i = 0; i < doctors.length; i++) {
+            var patient = doctors[i];
+            var patientsRowConstructor = [];
+            patientsRowConstructor.push(patient["DoctorID"]);
+            patientsRowConstructor.push(patient["firstName"] + " " + patient["lastName"]);
+            patientsRowConstructor.push(patient["Specialization"]);
+            patientsRowConstructor.push(patient["Qualification"]);
+            doctorsInHospitalTableConstructor.push(patientsRowConstructor);
+        }
+        $('#doctor-list').DataTable({
+            data: doctorsInHospitalTableConstructor,
+            columns: [{
+                title: "<span class=\"fa fa-hospital-o fa-fw\" style=\"color: black;\"></span>   " + "  ID",
+                width: "25%"
+            }, {
+                title: "Doctor Name",
+                width: "45%"
+            }, {
+                title: "Department",
+                width: "35%"
+            }, {
+                title: "Qualification",
+                width: "35%"
+            }],
+
+            paging: false,
+            resposnive: true,
+            info: false,
+            language: {
+                searchPlaceholder: "Search patient in room...",
+                sSearch: ""
+            },
+            aaSorting: [
+                [3, 'desc']
+            ],
+            fnCreatedRow: function(nRow, aData, iDisplayIndex) {
+                // nRow - this is the HTML element of the row
+                // aData - array of the data in the columns. Get column 4 data: aData[3]
+                // iDataIndex - row index in the table
+
+                // color the Score field
+                if (aData[3] >= 35) { // red
+                    $('td:eq(3)', nRow).css("background-color", "#ffad99");
+                } else if (aData[3] >= 20) { // orange
+                    $('td:eq(3)', nRow).css("background-color", "#ffdd99");
+                } else if (aData[3] >= 10) { // yellow
+                    $('td:eq(3)', nRow).css("background-color", "#ffffcc");
+                }
+            }
+        });
+    });
+
+
+
+
+});
+
+
+
 
 $("#patients-waiting").ready(function() {
     $("#patients-waiting > tbody > tr").select(function() {
@@ -268,6 +341,12 @@ $("body").on('dblclick', '#patients-waiting > tbody > tr', function() {
     var NHSnumber = $(this).children('td')[0];
     NHSnumber = NHSnumber.textContent;
     window.location.href = URL + "/app/patient/" + NHSnumber;
+});
+
+$("body").on('dblclick', '#doctor-list > tbody > tr', function() {
+    var NHSnumber = $(this).children('td')[0];
+    NHSnumber = NHSnumber.textContent;
+    window.location.href = URL + "/app/doctor/" + NHSnumber;
 });
 
 /*
