@@ -12,10 +12,35 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongo = require('mongodb');
 var { mongoose } = require('./server/db/mongoose.js');
-
+const { PythonShell } = require('python-shell');
+//const { spawn } = require('child_process');
 /*
     View Engine
 */
+
+/*
+let options = {
+    scriptPath: "C:/Users/balak/Desktop/DBMS final",
+    args: ["25"]
+}
+PythonShell.run("prediction.py", options, (err, res) => {
+    if (err) console.log(err);
+    if (res) console.log(res);
+});
+*/
+var spawn = require("child_process").spawn;
+const exec = require('child_process').exec;
+
+const python = spawn('python', ['prediction.py', 18, 0]);
+python.stdout.on('data', function(data) {
+    console.log('Pipe data from python script ...');
+    dataToSend = data.toString();
+    console.log(dataToSend);
+});
+
+
+
+
 var app = express();
 // app.use([path,] callback [, callback...]) -> puts middleware fot the app
 app.use(express.static(__dirname + '/views'));
@@ -93,7 +118,17 @@ app.use('/app', (req, res, next) => {
     }
 });
 
+app.use('/analys', (req, res, next) => {
 
+    exec('"./prediction.py" 80 1', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+
+    });
+});
 
 
 /*

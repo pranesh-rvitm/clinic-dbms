@@ -55,6 +55,10 @@ a {
     background-color: transparent;
 }
 
+.inner-graph {
+    padding-top: 60px;
+}
+
 a:active,
 a:hover {
     outline: 0;

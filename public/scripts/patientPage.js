@@ -9,6 +9,9 @@ $(document).ready(function() {
     $("#delete-button").attr("href", "/app/deletepatient/" + hospitalNumber[3]);
 
     $.getJSON(patientAPI).done(function(patient) {
+
+
+
         $("#first-name-disabled").attr("placeholder", patient["firstName"]);
         $("#last-name-disabled").attr("placeholder", patient["lastName"]);
         $("#hospitalNumber-disabled").attr("placeholder", patient["hospitalNumber"]);
@@ -96,5 +99,6 @@ $(document).ready(function() {
                 }
             });
         });
+
     });
 });

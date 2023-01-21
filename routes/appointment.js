@@ -12,7 +12,9 @@ router.get('/app/appointments', (req, res) => {
 });
 
 
-
+router.get('/app/analysis', (req, res) => {
+    res.render('analysis', { pageTitle: "Patient Analysis" });
+});
 
 
 router.get('/app/getappointmentdetail', (req, res) => {

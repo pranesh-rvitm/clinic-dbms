@@ -120,6 +120,7 @@ router.get('/app/getpatientdetail', (req, res) => {
     GET one patient data -> for his personal page
 */
 router.get('/app/patient/:hospitalNumber', (req, res) => {
+
     hospitalNumber = req.params.hospitalNumber;
     Patient.findOne({
         hospitalNumber
