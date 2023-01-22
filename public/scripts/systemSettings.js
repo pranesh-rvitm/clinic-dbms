@@ -27,7 +27,7 @@ $(document).ready(function() {
                 title: "Select",
                 width: "30%"
             }],
-            scrollY: '40vh',
+
             scrollCollapse: true,
             paging: false,
             info: false,
@@ -66,7 +66,7 @@ $(document).ready(function() {
                 title: "Select",
                 width: "40%"
             }],
-            scrollY: '40vh',
+
             scrollCollapse: true,
             paging: false,
             info: false,

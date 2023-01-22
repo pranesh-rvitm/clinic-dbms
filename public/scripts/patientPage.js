@@ -7,6 +7,13 @@ $(document).ready(function() {
 
     $("#form-patient").attr("action", "/app/updatepatient/" + hospitalNumber[3]);
     $("#delete-button").attr("href", "/app/deletepatient/" + hospitalNumber[3]);
+    $("#cost-button").attr("href", "/app/patientcost/" + hospitalNumber[3]).click(function() {
+        $('#loadimg').show();
+    });;
+
+
+
+
 
     $.getJSON(patientAPI).done(function(patient) {
 
@@ -90,7 +97,7 @@ $(document).ready(function() {
                 }, {
                     title: "Diagnosis"
                 }],
-                scrollY: '40vh',
+                //scrollY: '40vh',
                 scrollCollapse: true,
                 paging: false,
                 info: false,

@@ -29,7 +29,6 @@ PythonShell.run("prediction.py", options, (err, res) => {
 });
 */
 var spawn = require("child_process").spawn;
-const exec = require('child_process').exec;
 
 const python = spawn('python', ['prediction.py', 18, 0]);
 python.stdout.on('data', function(data) {
@@ -119,14 +118,12 @@ app.use('/app', (req, res, next) => {
 });
 
 app.use('/analys', (req, res, next) => {
-
     exec('"./prediction.py" 80 1', (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return;
         }
         console.log(`stdout: ${stdout}`);
-
     });
 });
 

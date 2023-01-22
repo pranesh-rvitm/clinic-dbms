@@ -90,6 +90,7 @@ $("body").on('dblclick', '#patients-in-hospital > tbody > tr', function() {
     window.location.href = URL + "/app/patient/" + NHSnumber;
 });
 
+
 /*
      Google analytics
 */

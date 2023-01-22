@@ -119,8 +119,30 @@ router.get('/app/getpatientdetail', (req, res) => {
 /*
     GET one patient data -> for his personal page
 */
-router.get('/app/patient/:hospitalNumber', (req, res) => {
+const exec = require('child_process').exec;
 
+router.get('/app/patientcost/:hospitalNumber', (req, res) => {
+    hospitalNumber = req.params.hospitalNumber;
+    var cost;
+    Patient.findOne({ hospitalNumber }).then((patient) => {
+        var score = patient.score;
+        var command = '"./prediction.py "' + " " + score + ' 1 ';
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return;
+            }
+            cost = stdout.split(" ");
+            var fcost = parseInt(cost[cost.length - 1]).toFixed(0);;
+            console.log(`stdout:${fcost}`);
+            res.status(200).render('patientPage', { insurance: fcost });
+
+        });
+        console.log(score);
+    })
+});
+
+router.get('/app/patient/:hospitalNumber', (req, res) => {
     hospitalNumber = req.params.hospitalNumber;
     Patient.findOne({
         hospitalNumber
@@ -128,6 +150,7 @@ router.get('/app/patient/:hospitalNumber', (req, res) => {
         if (_.isEmpty(patient)) {
             throw Error('Patient does not exist');
         }
+
         res.status(200).render('patientPage');
     }).catch((err) => {
         console.log(err);
@@ -152,7 +175,7 @@ router.get('/app/getpatient/:hospitalNumber', (req, res) => {
 
 /*
     POST /app/updatepatient/:hospitalNumber -> update disease & score for patient
-                                            -> request made from the patientPage
+    -> request made from the patientPage
 */
 router.post('/app/updatepatient/:hospitalNumber', (req, res) => {
     hospitalNumber = req.params.hospitalNumber;

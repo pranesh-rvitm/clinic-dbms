@@ -28,13 +28,21 @@
 
         <br>
   
-        <div class="row">
+        <div class="row" style="margin-top: 15px;">
             <a id="delete-button" class="btn btn-danger btn-lg btn-block">Delete patient</a>
         </div>
 
-         <div class="row pt-2">
-            <a id="delete-button" class="btn btn-primary btn-lg btn-block">Insurance Cost</a>
+         <div class="row pt-2" style="margin-top: 15px;">
+            <a id="cost-button" class="btn btn-primary btn-lg btn-block">Click for Predicted Cost</a>
         </div>
+      
+        <div class="row pt-2" style="margin-top: 15px;align-tems:center;justify-content: center;text-align: center;">
+            {{#if insurance}}
+            <a href="" id="bbutton" class="btn btn-success btn-lg btn-block">Rs.  {{insurance}}</a>
+         {{/if}}
+         <img id="loadimg" src="/images/loading.gif" style="display:none;width:100px;" alt="loading">
+        </div>
+        
     </div>
 
     <!-- Disease table column -->

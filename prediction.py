@@ -136,8 +136,11 @@ def func2():
     # reshape the array
     input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
     prediction = regressor.predict(input_data_reshaped)
-    print(prediction)
-    print('The approximate cost is rupees ', prediction[0])
+    # print(prediction)
+    if prediction[0]<0:
+       prediction[0]*=-1
+    print('The approximate cost is rupees ', prediction[0]*30)
+    return prediction[0]
 
 
 if(int(sys.argv[2])==1):
