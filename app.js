@@ -30,7 +30,7 @@ PythonShell.run("prediction.py", options, (err, res) => {
 */
 var spawn = require("child_process").spawn;
 
-const python = spawn('python', ['prediction.py', 18, 0]);
+const python = spawn('python', ['prediction.py', 28, 0, 3]);
 python.stdout.on('data', function(data) {
     console.log('Pipe data from python script ...');
     dataToSend = data.toString();

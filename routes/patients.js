@@ -126,7 +126,20 @@ router.get('/app/patientcost/:hospitalNumber', (req, res) => {
     var cost;
     Patient.findOne({ hospitalNumber }).then((patient) => {
         var score = patient.score;
-        var command = '"./prediction.py "' + " " + score + ' 1 ';
+        var dob = patient.dateOfBirth;
+        var disease = patient.diseases;
+        var datesplit = dob.split("/");
+        var age = 2023 - parseInt(datesplit[datesplit.length - 1]);
+
+        var discore;
+        if (disease[0] == 'Asthma') discore = 0;
+        else if (disease[0] == 'Cancer') discore = 1;
+        else if (disease[0] == 'covid-19') discore = 3;
+        else if (disease[0] == 'Diarrhea') discore = 4;
+        else if (disease[0] == 'Tuberculosis') discore = 5;
+        else discore = 4;
+
+        var command = '"./prediction.py "' + " " + age + ' 1' + " " + discore;
         exec(command, (error, stdout, stderr) => {
             if (error) {
                 console.error(`exec error: ${error}`);
@@ -138,7 +151,6 @@ router.get('/app/patientcost/:hospitalNumber', (req, res) => {
             res.status(200).render('patientPage', { insurance: fcost });
 
         });
-        console.log(score);
     })
 });
 
