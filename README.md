@@ -10,8 +10,6 @@ The project uses machine learning in python  to predict medical cost using previ
 
 ![image](https://user-images.githubusercontent.com/117212598/216758171-5c4ff869-8301-4f23-b65f-407586c51809.png)
 
-![image](https://user-images.githubusercontent.com/117212598/216758210-90334e77-9c15-414e-995d-83f88dbbfdf2.png)
-
 
 # Tech stack
 * **FRONT END** : HTML, CSS, Bootstrap, Jquery
